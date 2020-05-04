@@ -13,10 +13,6 @@ class ApplicationController < ActionController::Base
     team.owner.id == current_user.id
   end
 
-  def own?
-    
-  end
-
   private
 
   def set_working_team

@@ -30,7 +30,6 @@ class TeamsController < ApplicationController
   end
 
   def update
-    # if @team.owner.id == current_user.id
     if team_reader?(@team)
       if @team.update(team_params)
         redirect_to @team, notice: I18n.t('views.messages.update_team')
@@ -60,10 +59,5 @@ class TeamsController < ApplicationController
 
   def team_params
     params.fetch(:team, {}).permit %i[name icon icon_cache owner_id keep_team_id]
-  end
-
-  def team_reader(assign)
-    # assign = Assign.find(params[:id])
-    redirect_to teams_url unless assign.team.owner.id == current_user.id
   end
 end
