@@ -30,14 +30,16 @@ class TeamsController < ApplicationController
   end
 
   def update
-    assign = Assign.find_by(team_id: params[:id])
-    unless team_reader(assign)
+    # if @team.owner.id == current_user.id
+    if team_reader?(@team)
       if @team.update(team_params)
         redirect_to @team, notice: I18n.t('views.messages.update_team')
       else
         flash.now[:error] = I18n.t('views.messages.failed_to_save_team')
         render :edit
       end
+    else
+      render :edit
     end
   end
 
