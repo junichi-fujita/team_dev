@@ -30,11 +30,14 @@ class TeamsController < ApplicationController
   end
 
   def update
-    if @team.update(team_params)
-      redirect_to @team, notice: I18n.t('views.messages.update_team')
-    else
-      flash.now[:error] = I18n.t('views.messages.failed_to_save_team')
-      render :edit
+    assign = Assign.find_by(team_id: params[:id])
+    unless team_reader(assign)
+      if @team.update(team_params)
+        redirect_to @team, notice: I18n.t('views.messages.update_team')
+      else
+        flash.now[:error] = I18n.t('views.messages.failed_to_save_team')
+        render :edit
+      end
     end
   end
 
@@ -55,5 +58,10 @@ class TeamsController < ApplicationController
 
   def team_params
     params.fetch(:team, {}).permit %i[name icon icon_cache owner_id keep_team_id]
+  end
+
+  def team_reader(assign)
+    # assign = Assign.find(params[:id])
+    redirect_to teams_url unless assign.team.owner.id == current_user.id
   end
 end

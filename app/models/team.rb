@@ -15,4 +15,9 @@ class Team < ApplicationRecord
   def invite_member(user)
     assigns.create(user: user)
   end
+
+  # def team_owner?
+  #   assign = Assign.find(params[:id])
+  #   assign.team.owner.id == current_user.id
+  # end
 end
