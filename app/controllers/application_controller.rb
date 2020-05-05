@@ -2,9 +2,15 @@ class ApplicationController < ActionController::Base
   before_action :init_team, if: :user_signed_in?
   before_action :set_working_team, if: :user_signed_in?
 
+  helper_method :team_reader?
+
   def change_keep_team(user, current_team)
     user.keep_team_id = current_team.id
     user.save!
+  end
+
+  def team_reader?(team)
+    team.owner.id == current_user.id
   end
 
   private
