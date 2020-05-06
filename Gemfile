@@ -46,6 +46,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'rails-flog', require: 'flog'
 end
 
 group :development do

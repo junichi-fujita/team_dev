@@ -45,6 +45,11 @@
                       <td><%= assign.user.email %></td>
                       <% if team_reader?(@team) || assign.user_id == current_user.id%>
                         <td><%= link_to I18n.t('views.button.delete'), team_assign_path(@team, assign), method: :delete, class: 'btn btn-sm btn-danger' %></td>
+                      <% else %>
+                        <td></td>
+                      <% end %>
+                      <% if @team.owner_id != assign.user_id && team_reader?(@team) %>
+                        <td><%= link_to I18n.t('views.button.transfer'), transfer_team_path(assign), method: :patch, class: 'btn btn-sm btn-primary' %>
                       <% end %>
                     </tr>
                   <% end %>
