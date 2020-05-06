@@ -26,6 +26,7 @@ class AgendasController < ApplicationController
     # raise
     if @agenda.user_id == current_user.id || @agenda.team.owner_id == current_user.id
       @agenda.destroy
+      DeletionNotificationMailer.deletion_notification_mail(@agenda).deliver_now
       redirect_to dashboard_url, notice: "アジェンダを削除しました。"
     end
   end
