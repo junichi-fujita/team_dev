@@ -40,7 +40,6 @@
               <table class="table">
                 <tbody>
                   <% @team.assigns.each do |assign| %>
-                    <%# binding.pry %>
                     <tr>
                       <td><%= image_tag 'default.jpg', size: '40x40' %></td>
                       <td><%= assign.user.email %></td>

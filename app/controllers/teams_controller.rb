@@ -55,13 +55,10 @@ class TeamsController < ApplicationController
     assign = Assign.find(params[:id])
     team = Team.find(assign.team_id)
     team.owner_id = assign.user_id
-    # raise
-    # binding.pry
     team.save!
     new_reader = assign.user
     ChangeReaderMailer.change_reader_mail(new_reader, team).deliver_now
     redirect_to team_path(team)
-
   end
 
   private
