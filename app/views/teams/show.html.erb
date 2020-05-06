@@ -48,7 +48,7 @@
                       <% else %>
                         <td></td>
                       <% end %>
-                      <% unless @team.owner_id == assign.user_id %>
+                      <% if @team.owner_id != assign.user_id && team_reader?(@team) %>
                         <td><%= link_to I18n.t('views.button.transfer'), transfer_team_path(assign), method: :patch, class: 'btn btn-sm btn-primary' %>
                       <% end %>
                     </tr>

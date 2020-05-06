@@ -53,12 +53,16 @@ class TeamsController < ApplicationController
 
   def transfer
     assign = Assign.find(params[:id])
-    team = Team.find(assign.team_id)
-    team.owner_id = assign.user_id
-    team.save!
-    new_reader = assign.user
-    ChangeReaderMailer.change_reader_mail(new_reader, team).deliver_now
-    redirect_to team_path(team)
+    @team = Team.find(assign.team_id)
+    if team_reader?(@team)
+      @team.owner_id = assign.user_id
+      @team.save!
+      new_reader = assign.user
+      ChangeReaderMailer.change_reader_mail(new_reader, @team).deliver_now
+      redirect_to team_path(@team)
+    else
+      render :show
+    end
   end
 
   private
